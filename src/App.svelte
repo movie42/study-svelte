@@ -1,37 +1,49 @@
 <script lang="ts">
-  let userInfo: { id: string; password: string } = { id: '', password: '' };
+  import Button from './Button.svelte';
+  import Input from './Input.svelte';
+  let userId: string = '';
+  let userPassword: string = '';
+  let isLogin: boolean = false;
+
   function handleSubmit(e: SubmitEvent) {
     e.preventDefault();
 
     if (!e.currentTarget) {
       return;
     }
-    const formData = new FormData(e.currentTarget as HTMLFormElement);
-    const obj = Object.fromEntries(formData) as { id: string; password: string };
-    userInfo = obj;
+
+    if (userId && userPassword) {
+      isLogin = true;
+    }
   }
 </script>
 
 <main>
   <h1>오우야 svelte</h1>
   <div class="input-container">
-    {#if userInfo.id && userInfo.password}
-      <h2>{userInfo.id}</h2>
-      <h2>{userInfo.password}</h2>
+    {#if (userId || userPassword) && !isLogin}
+      <h2>{userId}</h2>
+      <h2>{userPassword}</h2>
+    {/if}
+    {#if isLogin}
+      <h2>로그인 되었어용!😅</h2>
     {/if}
   </div>
 
   <form on:submit={handleSubmit}>
-    <div class="form-item-container">
-      <label for="id">아이디</label>
-      <input id="id" type="text" name="id" />
-    </div>
-    <div class="form-item-container">
-      <label for="password">비밀번호</label>
-      <input type="password" name="password" />
-    </div>
-
-    <button>로그인</button>
+    <Input
+      label="아이디"
+      htmlFor="id"
+      bind:inputValue={userId}
+      inputProps={{ id: 'id', type: 'text', name: 'id' }}
+    />
+    <Input
+      label="비밀번호"
+      htmlFor="password"
+      bind:inputValue={userPassword}
+      inputProps={{ id: 'password', type: 'password', name: 'password' }}
+    />
+    <Button>로그인</Button>
   </form>
 </main>
 
@@ -50,15 +62,5 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-  }
-
-  form > div.form-item-container {
-    display: grid;
-    grid-template-columns: 60px 1fr;
-    gap: 8px;
-  }
-  form > div.form-item-container > label {
-    text-align: left;
-    width: 100%;
   }
 </style>
