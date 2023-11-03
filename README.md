@@ -1,29 +1,29 @@
-# svelte
+# Svelte
 
-## dev env
+## Development Environment
 
-- requirement "bun 1.0.7"
+- Requires "Bun 1.0.7"
 
-## how to install app
+## How to Install the App
 
-1. first you clone this repo
+1. First, clone this repository:
 
-```zsh
-    git clone <repo url>
+```bash
+git clone <repo url>
 ```
 
-2. If your computer not installed Bun, please install first.
+2. If Bun is not installed on your computer, please install it first.
 
-3. If you have Bun. You put into Terminal or CLI tool below command.
+3. If you already have Bun, run the following command in your Terminal or CLI tool:
 
-```zsh
+```bash
 bun install
 ```
 
-4. And...
+4. Finally, execute the following command:
 
-```zsh
+```bash
 bun dev
 ```
 
-5. Happy Svelte.
+5. Enjoy using Svelte!
