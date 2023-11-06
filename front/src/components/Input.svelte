@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { HTMLInputAttributes } from 'svelte/elements';
+  import type { HTMLInputAttributes } from "svelte/elements";
   type InputProps = HTMLInputAttributes;
 
   export let htmlFor: string;

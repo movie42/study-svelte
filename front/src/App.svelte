@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Button, Input, Message } from "./components";
+  import { api } from "./services/instance";
 
   let error: string = "";
   let userId: string = "";
@@ -10,7 +11,7 @@
     error = "";
   }
 
-  function handleSubmit(e: SubmitEvent) {
+  async function handleSubmit(e: SubmitEvent) {
     e.preventDefault();
 
     if (!e.currentTarget) {
@@ -21,7 +22,11 @@
     }
 
     if (userId && userPassword) {
-      isLogin = true;
+      const loginRequest = await api.post("/auth/login", {
+        username: userId,
+        password: userPassword,
+      });
+      console.log(loginRequest);
     }
   }
 </script>
