@@ -27,3 +27,16 @@ bun dev
 ```
 
 5. Enjoy using Svelte!
+
+## Appendix
+
+### ElysiaJS
+
+- [Accelerate your next Prisma server with Elysia](https://elysiajs.com/blog/with-prisma.html)
+- [ElysiaJS (1) - State + Derive를 이용한 mock db CRUD](https://velog.io/@ehrbs2021/ElysiaJS-1-CRUD)
+- [Add JWT Authentication in Bun API](https://dev.to/harshmangalam/add-jwt-authentication-in-bun-api-488d)
+
+### Next
+
+- [ ] how to make router on svelte
+- [ ] let's build monorepo

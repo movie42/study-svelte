@@ -22,7 +22,7 @@
     }
 
     if (userId && userPassword) {
-      const loginRequest = await api.post("/auth/login", {
+      const loginRequest = await api.post("/auth/signup", {
         username: userId,
         password: userPassword,
       });
