@@ -1,3 +1,5 @@
+import cookie from "@elysiajs/cookie";
+import { jwt } from "@elysiajs/jwt";
 import Elysia from "elysia";
 import { prisma } from "../lib/prisma";
 import { AuthRepository } from "../repositories/auth.repository";
@@ -13,6 +15,8 @@ export const authService = new Elysia({
   name: "authService",
 })
   .use(authRepository)
+  .use(jwt({ name: "jwt", secret: Bun.env.JWT_SECRET! }))
+  .use(cookie())
   .derive(({ authRepository }) => ({
     authService: new AuthService(authRepository),
   }));

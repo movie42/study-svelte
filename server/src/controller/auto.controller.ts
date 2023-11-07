@@ -1,43 +1,24 @@
-import { SetCookieOptions } from "@elysiajs/cookie";
-import { JWTPayloadSpec } from "@elysiajs/jwt";
-import Elysia from "elysia";
+import Elysia, { t } from "elysia";
 import { authService } from "../plugins/auth.plugin";
-import { AuthService } from "../services/auth.service";
+import { comparePassword } from "../utils/bcrypt";
 
-interface SignUp {
-  body: {
-    username: string;
-    password: string;
-  };
-  authService: AuthService;
-}
+const schema = {
+  body: t.Object({
+    username: t.String(),
+    password: t.String(),
+  }),
+};
 
-interface Login extends SignUp {
-  myJWT: {
-    readonly sign: (
-      morePayload: Record<string, string> & JWTPayloadSpec,
-    ) => Promise<string>;
-    readonly verify: (
-      jwt?: string | undefined,
-    ) => Promise<false | (Record<string, string> & JWTPayloadSpec)>;
-  };
-  setCookie: (
-    name: string,
-    value: string,
-    options?: SetCookieOptions | undefined,
-  ) => void;
-}
 export namespace AuthController {
   export const ping = new Elysia({ name: "ping" }).get("/ping", () => "pong");
-  export const signup = new Elysia({ name: "signup" })
-    .use(authService)
-    .post("/signup", async ({ body, authService }) => {
-      const { username, password } = body as {
-        username: string;
-        password: string;
-      };
+  export const signup = new Elysia({ name: "signup" }).use(authService).post(
+    "/signup",
+    async ({ body, authService, set }) => {
+      const { username, password } = body;
       const findUser = await authService.findUser(username);
+
       if (findUser) {
+        set.status = 409;
         return {
           success: false,
           message: "이미 가입한 회원입니다.",
@@ -45,6 +26,7 @@ export namespace AuthController {
         };
       }
       const createUser = await authService.createUser(username, password);
+
       if (!createUser) {
         return createUser;
       }
@@ -56,54 +38,54 @@ export namespace AuthController {
           user: createUser,
         },
       };
-    });
+    },
+    schema,
+  );
 
-  // export const login = async ({ body, set, myJWT, setCookie }: Login) => {
-  //   const { username, password } = body;
-  //   console.log(username, password);
-  //   const user = await prisma.user.findFirst({
-  //     where: {
-  //       username,
-  //     },
-  //     select: {
-  //       id: true,
-  //       hash: true,
-  //       salt: true,
-  //     },
-  //   });
+  export const login = new Elysia({ name: "signup" }).use(authService).post(
+    "/login",
+    async ({ body, set, authService, jwt, setCookie }) => {
+      const { username, password } = body;
+      const user = await authService.findUser(username);
 
-  //   if (!user) {
-  //     set.status = 400;
-  //     return {
-  //       success: false,
-  //       data: null,
-  //       message: "Invalid credentials",
-  //     };
-  //   }
+      if (!user) {
+        set.status = 400;
+        return {
+          success: false,
+          data: null,
+          message: "아이디 또는 비밀번호를 다시 입력해주세요.",
+        };
+      }
 
-  //   const match = await comparePassword(password, user.salt, user.hash);
-  //   if (!match) {
-  //     set.status = 400;
-  //     return {
-  //       success: false,
-  //       data: null,
-  //       message: "Invalid credentials",
-  //     };
-  //   }
+      const match = await comparePassword(password, user.salt, user.hash);
 
-  //   const accessToken = await myJWT.sign({
-  //     userId: user.id,
-  //   });
+      if (!match) {
+        set.status = 400;
+        return {
+          success: false,
+          data: null,
+          message: "아이디 또는 비밀번호를 다시 입력해주세요.",
+        };
+      }
 
-  //   setCookie("access_token", accessToken, {
-  //     maxAge: 15 * 60,
-  //     path: "/",
-  //   });
+      const accessToken = await jwt.sign({
+        userId: user.id,
+      });
 
-  //   return {
-  //     success: true,
-  //     data: null,
-  //     message: "Account login successfully",
-  //   };
-  // };
+      setCookie("access_token", accessToken, {
+        maxAge: 15 * 60,
+        path: "/",
+        sameSite: "none",
+        httpOnly: true,
+        domain: "http://localhost:5173",
+      });
+
+      return {
+        success: true,
+        data: accessToken,
+        message: "Account login successfully",
+      };
+    },
+    schema,
+  );
 }

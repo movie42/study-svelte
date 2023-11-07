@@ -7,7 +7,7 @@ export class AuthRepository {
   async findUser(username: string) {
     return await this.prisma.user.findUnique({
       where: { username },
-      select: { id: true },
+      select: { id: true, salt: true, hash: true },
     });
   }
   async createUser(username: string, password: string) {
