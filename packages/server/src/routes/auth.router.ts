@@ -1,4 +1,5 @@
 import Elysia from "elysia";
+
 import { AuthController } from "../controller/auto.controller";
 
 export const authRouter = new Elysia({

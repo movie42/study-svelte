@@ -1,4 +1,5 @@
 import { createHash, pbkdf2, randomBytes } from "node:crypto";
+
 async function hashPassword(
   password: string,
 ): Promise<{ hash: string; salt: string }> {

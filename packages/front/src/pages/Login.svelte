@@ -2,17 +2,19 @@
   import { AxiosError } from "axios";
   import { navigate } from "svelte-routing/src/history";
   import { Button, Input, Message } from "../components";
+
   import { api } from "../services/instance";
   import { storage } from "../services/localStorage";
   import { token } from "../store/stores";
 
-  let error: string = "";
-  let userId: string = "";
-  let userPassword: string = "";
+  let errorMessage = "";
+
+  let userId = "";
+  let userPassword = "";
 
   $: {
     if (!userId || !userPassword) {
-      error = "";
+      errorMessage = "";
     }
   }
 
@@ -23,7 +25,7 @@
       return;
     }
     if (!userId || !userPassword) {
-      return (error = "아이디 또는 비밀번호를 입력해주세요.");
+      return (errorMessage = "아이디 또는 비밀번호를 입력해주세요.");
     }
 
     try {
@@ -42,7 +44,7 @@
       }
     } catch (e) {
       if (e instanceof AxiosError) {
-        error = e.response?.data.message;
+        errorMessage = e.response?.data.message;
       }
     }
   }
@@ -64,7 +66,7 @@
       bind:inputValue={userPassword}
       inputProps={{ id: "password", type: "password", name: "password" }}
     />
-    <Message message={error} />
+    <Message message="errorMessage}" />
     <Button>로그인</Button>
   </form>
 </main>

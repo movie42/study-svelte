@@ -1,6 +1,7 @@
 import cookie from "@elysiajs/cookie";
 import { jwt } from "@elysiajs/jwt";
 import Elysia from "elysia";
+
 import { prisma } from "../lib/prisma";
 import { AuthRepository } from "../repositories/auth.repository";
 import { AuthService } from "../services/auth.service";

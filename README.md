@@ -36,12 +36,17 @@ bun dev
 - [svelte-routing](https://github.com/EmilTholin/svelte-routing)
 - [How to Set Up Protected Routes in Your Svelte Application](https://webtips.dev/how-to-set-up-protected-routes-in-your-svelte-application)
 - [Svelte.js 06 - 저장소를 이용한 상태 및 데이터 관리](https://younggeun0.dev/post/fddb8ec2-8ca9-46bc-a588-06234c3d1826)
+- [[Svelte] Getting Started with VSCode-[김인연의 개발 공부:티스토리]](https://hdevstudy.tistory.com/201)
 
 ### ElysiaJS
 
 - [Accelerate your next Prisma server with Elysia](https://elysiajs.com/blog/with-prisma.html)
 - [ElysiaJS (1) - State + Derive를 이용한 mock db CRUD](https://velog.io/@ehrbs2021/ElysiaJS-1-CRUD)
 - [Add JWT Authentication in Bun API](https://dev.to/harshmangalam/add-jwt-authentication-in-bun-api-488d)
+
+### bun
+
+- [Configuring a monorepo using workspaces with Bun](https://bun.sh/guides/install/workspaces)
 
 ### cors
 
@@ -50,5 +55,6 @@ bun dev
 ### Next
 
 - [x] how to make router on svelte
+- [x] monorepo : vanilla
 - [ ] state management
   - [x] store

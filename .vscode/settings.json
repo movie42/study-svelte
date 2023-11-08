@@ -1,0 +1,8 @@
+{
+  "bun.runtime": "/path/to/bun",
+  "bun.debugTerminal.enabled": true,
+  "bun.debugTerminal.stopOnEntry": false,
+  "editor.formatOnSave": true,
+  "eslint.codeActionsOnSave.mode": "all",
+  "eslint.validate": ["javascript", "typescript", "svelte"]
+}

@@ -1,6 +1,7 @@
 {
-  "name": "app",
+  "name": "server",
   "version": "1.0.50",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts"
@@ -11,7 +12,8 @@
     "@elysiajs/jwt": "^0.7.0",
     "@elysiajs/swagger": "^0.7.4",
     "@prisma/client": "^5.5.2",
-    "elysia": "latest"
+    "elysia": "latest",
+    "eslint": "^8.53.0"
   },
   "devDependencies": {
     "bun-types": "latest",
